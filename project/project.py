@@ -16,16 +16,23 @@ while True:
     u_g = np.array([179, 255, 255])
 
     mask = cv2.inRange(hsv, l_g, u_g)
+#identifying image from the video
     result = cv2.bitwise_and(frame, frame, mask=mask)
+    #subtracting the background from the video
     final = frame-result
-    #cv2.imshow("Frame", frame)
+     #wherever zero replace with the image and 
+    # whenever not zero, reatain the value of final
+    green_screen = np.where(final==0, image, final)
+    cv2.imshow("Frame", frame)
     #cv2.imshow("Mask", mask)
     #cv2.imshow("Image", image)
     #cv2.imshow("result", result)
-    cv2.imshow("final", final)
+    #cv2.imshow("final", final)
+    cv2.imshow("green screen", green_screen)
+
     k=cv2.waitKey(1) #saves the key pressed to k
     if k==ord('q'): #checks if the key pressd == to 'q'
         break
 video.release()
-image.release()
+#image.release()
 cv2.destroyAllWindows()   # destroys the frame  and everytime the project is debugged new resources are allocated
